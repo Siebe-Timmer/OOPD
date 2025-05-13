@@ -2,6 +2,7 @@ package org.example;
 
 import com.github.hanyaeger.api.Size;
 import com.github.hanyaeger.api.YaegerGame;
+import org.example.scenes.GameScene;
 import org.example.scenes.StartScene;
 
 
@@ -10,7 +11,7 @@ public class BrickBreaker extends YaegerGame
 
     private static final String GAME_TITLE = "Brick Breaker";
 
-    public static final Size GAME_SIZE = new Size(1024, 698);
+    public static final Size GAME_SIZE = new Size(512, 756);
 
     public static final int SCENE_START = 1;
     public static final int SCENE_GAME = 2;
@@ -28,6 +29,7 @@ public class BrickBreaker extends YaegerGame
 
     @Override
     public void setupScenes() {
-        addScene(0, new StartScene(this));
+        addScene(SCENE_START, new StartScene(this));
+        addScene(SCENE_GAME, new GameScene());
     }
 }

@@ -25,14 +25,14 @@ public class StartScene extends StaticScene {
 
     @Override
     public void setupEntities(){
-        var waterworldText = new TextEntity(
+        var brickbreakerText = new TextEntity(
                 new Coordinate2D(getWidth() / 2, getHeight() / 2),
                 "BrickBreaker"
         );
-        waterworldText.setAnchorPoint(AnchorPoint.CENTER_CENTER);
-        waterworldText.setFill(Color.BLACK);
-        waterworldText.setFont(Font.font("Roboto", FontWeight.BOLD, 80));
-        addEntity(waterworldText);
+        brickbreakerText.setAnchorPoint(AnchorPoint.CENTER_CENTER);
+        brickbreakerText.setFill(Color.BLACK);
+        brickbreakerText.setFont(Font.font("Roboto", FontWeight.BOLD, 80));
+        addEntity(brickbreakerText);
 
         var startButton = new StartButton(new Coordinate2D(getWidth()/2, getHeight()/2 + 100), brickBreaker);
         addEntity(startButton);
