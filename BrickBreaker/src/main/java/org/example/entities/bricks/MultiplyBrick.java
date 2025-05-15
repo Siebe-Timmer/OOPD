@@ -8,4 +8,5 @@ public class MultiplyBrick extends Brick{
     public MultiplyBrick(Coordinate2D initialLocation, Size size) {
         super("entities/multiply-brick.png", initialLocation, size);
     }
+
 }

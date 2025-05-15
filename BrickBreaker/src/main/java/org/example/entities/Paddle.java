@@ -16,6 +16,7 @@ public class Paddle extends DynamicSpriteEntity implements KeyListener, Collider
 
 
 
+
     @Override
     public void onPressedKeysChange(Set<KeyCode> pressedKeys){
         if(pressedKeys.contains(KeyCode.LEFT)){

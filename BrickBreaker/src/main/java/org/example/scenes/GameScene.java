@@ -24,11 +24,11 @@ public class GameScene extends DynamicScene {
 
     @Override
     public void setupEntities() {
-        var paddle = new Paddle(new Coordinate2D(getWidth() / 2, getHeight() / 6 * 5), new Size(100, 15));
+        var paddle = new Paddle(new Coordinate2D(getWidth() / 2, getHeight() / 6 * 5), new Size(100, 10));
         paddle.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         addEntity(paddle);
 
-        var ball = new Ball(new Coordinate2D(getWidth() / 2, 500));
+        var ball = new Ball(new Coordinate2D(getWidth() / 2, 500), paddle);
         ball.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         addEntity(ball);
 
@@ -42,9 +42,9 @@ public class GameScene extends DynamicScene {
 
     private int[][] getLevel1Layout() {
         return new int[][]{
-                {1, 2, 1, 0, 0, 2, 1},
-                {2, 0, 1, 1, 0, 1, 2},
-                {1, 1, 0, 2, 1, 0, 1}
+                {1, 2, 1, 1, 0, 2, 1, 1},
+                {2, 2, 1, 1, 1, 1, 2, 2},
+                {1, 1, 1, 2, 1, 1, 1, 1}
         };
     }
 }
