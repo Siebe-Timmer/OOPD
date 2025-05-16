@@ -1,0 +1,113 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+abstract class YaegerGame #lightblue
+abstract class StaticScene #lightblue
+abstract class DynamicScene #lightblue
+abstract class TextEntity #lightblue
+interface TimerContainer #lightblue
+abstract class DynamicSpriteEntity #lightblue
+interface SceneBorderTouchingWatcher #lightblue
+interface Collided #lightblue
+interface Collider #lightblue
+abstract class SpriteEntity #lightblue
+abstract class DynamicCircleEntity #lightblue
+
+
+class BrickBreaker{
+
+}
+
+YaegerGame <|-- BrickBreaker
+
+interface PowerUpSpawner
+interface BallSpawner
+interface BallManager
+
+class StartScene{
+
+
+}
+class GameScene{
+
+}
+
+class BrickGrid{
+}
+class Paddle{
+}
+
+PowerUpSpawner <-- BrickGrid
+PowerUpSpawner <-- Brick
+
+StaticScene <|-- StartScene
+BrickBreaker <-- StartScene
+DynamicScene <|-- GameScene
+TimerContainer <|.. GameScene
+
+PowerUpSpawner <|.. GameScene
+BallSpawner <|.. GameScene
+BallManager <|.. GameScene
+
+BrickGrid <-- GameScene
+Paddle <-- GameScene
+
+class Ball{
+}
+class TimerText{}
+
+Ball <-- GameScene
+TimerText <-- GameScene
+TextEntity <|-- TimerText
+
+class PowerUp
+
+DynamicSpriteEntity <|-- PowerUp
+SceneBorderTouchingWatcher <|.. PowerUp
+Collided <|.. PowerUp
+
+class MultiplyPowerUp
+class SpeedPowerUp
+
+PowerUp <|-- MultiplyPowerUp
+PowerUp <|-- SpeedPowerUp
+
+abstract class Brick
+SpriteEntity <|-- Brick
+Collided <|.. Brick
+Collider <|.. Brick
+
+class MultiplyBrick
+class NormalBrick
+class SolidBrick
+class SpeedBrick
+
+Brick <|-- NormalBrick
+Brick <|-- SolidBrick
+Brick <|-- SpeedBrick
+Brick <|-- MultiplyBrick
+
+PowerUpSpawner <-- NormalBrick
+PowerUpSpawner <-- MultiplyBrick
+PowerUpSpawner <-- SolidBrick
+PowerUpSpawner <-- SpeedBrick
+
+class StartButton
+
+TextEntity <|-- StartButton
+StartButton <-- StartScene
+
+enum PowerUpType{
+SPEED
+MULTIPLIER
+}
+
+Collider <|.. Ball
+Collided <|.. Ball
+SceneBorderTouchingWatcher <|.. Ball
+DynamicCircleEntity <|-- Ball
+
+
+
+@enduml
