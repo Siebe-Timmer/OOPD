@@ -9,13 +9,11 @@ import org.example.entities.Ball;
 import org.example.entities.BrickGrid;
 import org.example.entities.Paddle;
 import org.example.entities.bricks.Brick;
+import org.example.entities.powerups.*;
 
-public class GameScene extends DynamicScene {
+public class GameScene extends DynamicScene implements PowerUpSpawner {
 
     private BrickGrid brickGrid;
-
-    public GameScene() {
-    }
 
     @Override
     public void setupScene() {
@@ -32,7 +30,7 @@ public class GameScene extends DynamicScene {
         ball.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         addEntity(ball);
 
-        brickGrid = new BrickGrid();
+        brickGrid = new BrickGrid(this);
         brickGrid.loadLayout(getLevel1Layout());
 
         for (Brick brick : brickGrid.getBricks()) {
@@ -40,11 +38,21 @@ public class GameScene extends DynamicScene {
         }
     }
 
+    @Override
+    public void spawnPowerUp(Coordinate2D location, PowerUpType type) {
+        switch (type) {
+            case SPEED -> addEntity(new SpeedPowerUp(location));
+            case SIZE -> addEntity(new SizePowerUp(location));
+            case MULTIPLIER -> addEntity(new MultiplyPowerUp(location));
+        }
+    }
+
+
     private int[][] getLevel1Layout() {
         return new int[][]{
-                {1, 2, 1, 1, 0, 2, 1, 1},
-                {2, 2, 1, 1, 1, 1, 2, 2},
-                {1, 1, 1, 2, 1, 1, 1, 1}
+                {1, 2, 3, 5, 0, 2, 1, 1},
+                {2, 2, 2, 3, 4, 2, 2, 2},
+                {1, 4, 1, 2, 1, 1, 3, 1}
         };
     }
 }
