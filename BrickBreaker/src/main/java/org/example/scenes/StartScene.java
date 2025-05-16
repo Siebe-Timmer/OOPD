@@ -34,8 +34,16 @@ public class StartScene extends StaticScene {
         brickbreakerText.setFont(Font.font("Roboto", FontWeight.BOLD, 80));
         addEntity(brickbreakerText);
 
-        var startButton = new StartButton(new Coordinate2D(getWidth()/2, getHeight()/2 + 100), brickBreaker);
-        addEntity(startButton);
+        var level1Button = new StartButton(new Coordinate2D(getWidth() / 2, getHeight() / 2 + 50), brickBreaker, 1);
+        addEntity(level1Button);
+
+        // Level 2 knop
+        var level2Button = new StartButton(new Coordinate2D(getWidth() / 2, getHeight() / 2 + 100), brickBreaker, 2);
+        addEntity(level2Button);
+
+        // Level 3 knop
+        var level3Button = new StartButton(new Coordinate2D(getWidth() / 2, getHeight() / 2 + 150), brickBreaker, 3);
+        addEntity(level3Button);
     }
 
 

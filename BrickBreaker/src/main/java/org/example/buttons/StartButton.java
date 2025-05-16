@@ -11,17 +11,21 @@ import org.example.BrickBreaker;
 
 public class StartButton extends TextEntity implements MouseButtonPressedListener {
     private BrickBreaker brickBreaker;
+    private int level;
 
-    public StartButton(Coordinate2D initialLocation, BrickBreaker brickBreaker) {
-        super(initialLocation,"PLAY");
+    public StartButton(Coordinate2D initialLocation, BrickBreaker brickBreaker, int level) {
+        super(initialLocation, "Start Level " + level);
         this.brickBreaker = brickBreaker;
+        this.level = level;
         setFill(Color.BLUE);
         setFont(Font.font("Roboto", FontWeight.BOLD, 30));
     }
 
     @Override
     public void onMouseButtonPressed(MouseButton button, Coordinate2D coordinate2D){
-        brickBreaker.setActiveScene(2);
+        if(button == MouseButton.PRIMARY){
+            brickBreaker.startGameScene(level);
+        }
     }
 
 }

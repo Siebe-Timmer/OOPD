@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import org.example.entities.Ball;
 import org.example.entities.BrickGrid;
 import org.example.entities.Paddle;
+import org.example.entities.TimerText;
 import org.example.entities.bricks.Brick;
 import org.example.entities.powerups.*;
 
@@ -18,6 +19,15 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
     private Paddle paddle;
     private final List<Ball> balls = new ArrayList<>();
 
+    private TimerText timerText;
+    private long startTime;
+
+    private final int[][] levelLayout;
+
+    public GameScene(int[][] levelLayout) {
+        this.levelLayout = levelLayout;
+    }
+
     @Override
     public void setupScene() {
         setBackgroundColor(Color.rgb(86, 154, 255));
@@ -29,17 +39,33 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
         paddle.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         addEntity(paddle);
 
-        var ball = new Ball(new Coordinate2D(getWidth() / 2, 500), paddle, this);
+        var ball = new Ball(new Coordinate2D(getWidth() / 2, 500), this);
         ball.setAnchorPoint(AnchorPoint.CENTER_CENTER);
         addEntity(ball);
-        addBall(ball);
 
         brickGrid = new BrickGrid(this);
-        brickGrid.loadLayout(getLevel1Layout());
+        brickGrid.loadLayout(levelLayout);
 
         for (Brick brick : brickGrid.getBricks()) {
             addEntity(brick);
         }
+
+        timerText = new TimerText(new Coordinate2D(20, getHeight() - 40));
+        addEntity(timerText);
+
+        startTime = System.currentTimeMillis();
+    }
+
+    @Override
+    public void setupTimers() {
+        Timer updateTimerText = new Timer(1000L) {
+            @Override
+            public void onAnimationUpdate(long timestamp) {
+                long elapsedSeconds = (System.currentTimeMillis() - startTime) / 1000;
+                timerText.setText("Time: " + elapsedSeconds + "s");
+            }
+        };
+        addTimer(updateTimerText);
     }
 
     @Override
@@ -51,21 +77,34 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
         }
     }
 
-
     @Override
     public void spawnExtraBall(Coordinate2D location, double angle) {
-        var newBall = new Ball(location, paddle, this);
+        var newBall = new Ball(location, this);
         newBall.setAnchorLocation(location);
         newBall.setMotion(2, angle);
         addEntity(newBall);
-        addBall(newBall);
     }
-
-
 
     @Override
     public void addBall(Ball ball) {
-        balls.add(ball);
+        System.out.println("addBall called for ball: " + ball);
+
+    }
+
+    @Override
+    public void removeBall(Ball ball) {
+        System.out.println("removeBall called for ball: " + ball);
+        balls.remove(ball);
+        System.out.println("Aantal ballen na verwijderen: " + balls.size());
+        if (balls.isEmpty()) {
+            System.out.println("Alle ballen zijn weg!");
+            onAllBallsLost();
+        }
+    }
+
+    private void onAllBallsLost() {
+        System.out.println("Alle ballen zijn weg, game over!");
+        // Hier kun je de scene veranderen of game-over logica toevoegen
     }
 
     @Override
@@ -96,17 +135,9 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
         addTimer(resetSpeedTimer);
     }
 
+    // Public getters voor de layouts zodat BrickBreaker ze kan gebruiken
 
-
-    @Override
-    public void setupTimers() {
-        // Geen standaard timers nodig bij opstarten
-    }
-
-
-
-
-    private int[][] getLevel1Layout() {
+    public static int[][] getLevel1Layout() {
         return new int[][]{
                 {1, 2, 3, 4, 0, 2, 1, 1},
                 {2, 2, 2, 3, 4, 2, 2, 2},
@@ -114,4 +145,22 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
         };
     }
 
+    public static int[][] getLevel2Layout() {
+        return new int[][]{
+                {1, 2, 3, 4, 0, 2, 1, 1},
+                {2, 2, 2, 3, 4, 2, 2, 2},
+                {1, 4, 1, 2, 1, 1, 3, 1},
+                {1, 4, 1, 2, 1, 1, 3, 1}
+        };
+    }
+
+    public static int[][] getLevel3Layout() {
+        return new int[][]{
+                {1, 2, 3, 4, 0, 2, 1, 1},
+                {2, 2, 2, 3, 4, 2, 2, 2},
+                {1, 2, 3, 4, 0, 2, 1, 1},
+                {2, 2, 2, 3, 4, 2, 2, 2},
+                {1, 4, 1, 2, 1, 1, 3, 1}
+        };
+    }
 }

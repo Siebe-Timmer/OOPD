@@ -14,13 +14,11 @@ import java.util.List;
 
 public class Ball extends DynamicCircleEntity implements Collider, Collided, SceneBorderTouchingWatcher {
 
-    private Paddle paddle;
     private BallManager ballManager;
 
-    public Ball(Coordinate2D initialLocation, Paddle paddle, BallManager ballManager) {
+    public Ball(Coordinate2D initialLocation, BallManager ballManager) {
         super(initialLocation);
         this.ballManager = ballManager;
-        this.paddle = paddle;
 
         super.setRadius(10);
         super.setFill(Color.WHITE);
@@ -94,8 +92,10 @@ public class Ball extends DynamicCircleEntity implements Collider, Collided, Sce
                 setDirection((180 - direction + 360) % 360);
                 break;
             case BOTTOM:
+                ballManager.removeBall(this);  // Laat GameScene weten dat deze bal weg is
                 remove();
                 break;
+
 
 
         }
