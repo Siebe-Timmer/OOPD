@@ -8,19 +8,25 @@ import com.github.hanyaeger.api.entities.impl.DynamicCircleEntity;
 import com.github.hanyaeger.api.scenes.SceneBorder;
 import javafx.scene.paint.Color;
 import org.example.entities.bricks.Brick;
+import org.example.entities.powerups.BallManager;
 
 import java.util.List;
 
 public class Ball extends DynamicCircleEntity implements Collider, Collided, SceneBorderTouchingWatcher {
 
     private Paddle paddle;
+    private BallManager ballManager;
 
-    public Ball(Coordinate2D initialLocation, Paddle paddle) {
+    public Ball(Coordinate2D initialLocation, Paddle paddle, BallManager ballManager) {
         super(initialLocation);
+        this.ballManager = ballManager;
+        this.paddle = paddle;
+
         super.setRadius(10);
         super.setFill(Color.WHITE);
-        this.paddle = paddle;
         setMotion(2, 0d);
+
+        ballManager.addBall(this);
     }
 
 
@@ -89,6 +95,8 @@ public class Ball extends DynamicCircleEntity implements Collider, Collided, Sce
                 break;
             case BOTTOM:
                 remove();
+                break;
+
 
         }
 

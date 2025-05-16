@@ -30,8 +30,7 @@ public class BrickGrid {
                     case 1 -> new SolidBrick(new Coordinate2D(col * 64, row * 32), size, powerUpSpawner);
                     case 2 -> new NormalBrick(new Coordinate2D(col * 64, row * 32), size, powerUpSpawner);
                     case 3 -> new MultiplyBrick(new Coordinate2D(col * 64, row * 32), size, powerUpSpawner);
-                    case 4 -> new SizeBrick(new Coordinate2D(col * 64, row * 32), size, powerUpSpawner);
-                    case 5 -> new SpeedBrick(new Coordinate2D(col * 64, row * 32), size, powerUpSpawner);
+                    case 4 -> new SpeedBrick(new Coordinate2D(col * 64, row * 32), size, powerUpSpawner);
                     default -> null;
                 };
 
