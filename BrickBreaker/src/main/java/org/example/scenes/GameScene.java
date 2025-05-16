@@ -104,7 +104,6 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
 
     private void onAllBallsLost() {
         System.out.println("Alle ballen zijn weg, game over!");
-        // Hier kun je de scene veranderen of game-over logica toevoegen
     }
 
     @Override
@@ -134,8 +133,6 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
 
         addTimer(resetSpeedTimer);
     }
-
-    // Public getters voor de layouts zodat BrickBreaker ze kan gebruiken
 
     public static int[][] getLevel1Layout() {
         return new int[][]{

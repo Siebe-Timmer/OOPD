@@ -29,10 +29,8 @@ public class BrickBreaker extends YaegerGame {
     @Override
     public void setupScenes() {
         addScene(SCENE_START, new StartScene(this));
-        // Voeg voorlopig geen GameScene toe want die willen we dynamisch aanmaken per level
     }
 
-    // Methode om GameScene te starten op basis van level nummer
     public void startGameScene(int levelNumber) {
         int[][] layout;
         switch (levelNumber) {
