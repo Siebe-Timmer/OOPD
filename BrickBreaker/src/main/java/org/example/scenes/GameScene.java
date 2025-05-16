@@ -1,8 +1,6 @@
 package org.example.scenes;
 
-import com.github.hanyaeger.api.AnchorPoint;
-import com.github.hanyaeger.api.Coordinate2D;
-import com.github.hanyaeger.api.Size;
+import com.github.hanyaeger.api.*;
 import com.github.hanyaeger.api.scenes.DynamicScene;
 import javafx.scene.paint.Color;
 import org.example.entities.Ball;
@@ -14,7 +12,7 @@ import org.example.entities.powerups.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawner, BallManager {
+public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawner, BallManager, TimerContainer {
 
     private BrickGrid brickGrid;
     private Paddle paddle;
@@ -76,16 +74,36 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
             ball.setSpeed(ball.getSpeed() * factor);
         }
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(durationInSeconds * 1000L);
-            } catch (InterruptedException ignored) {
+        Timer resetSpeedTimer = new Timer(durationInSeconds * 1000L) {
+            private boolean executed = false;
+
+            @Override
+            public void onAnimationUpdate(long timestamp) {
+                if (!executed) {
+                    for (Ball ball : balls) {
+                        ball.setSpeed(2);
+                    }
+                    executed = true;
+                }
             }
-            for (Ball ball : balls) {
-                ball.setSpeed(2);
+
+            @Override
+            public boolean isGarbage() {
+                return executed;
             }
-        }).start();
+        };
+
+        addTimer(resetSpeedTimer);
     }
+
+
+
+    @Override
+    public void setupTimers() {
+        // Geen standaard timers nodig bij opstarten
+    }
+
+
 
 
     private int[][] getLevel1Layout() {
@@ -95,4 +113,5 @@ public class GameScene extends DynamicScene implements PowerUpSpawner, BallSpawn
                 {1, 4, 1, 2, 1, 1, 3, 1}
         };
     }
+
 }
